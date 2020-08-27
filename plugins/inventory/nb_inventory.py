@@ -270,7 +270,13 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                    This is to help determine what might be the issue when encountering an error.
                    Please check issue #294 for more info.
                 """
-                raise AnsibleError(to_native(e.fp.read()))
+                if e.code == 403:
+                    self.display.v(
+                        "403 - Forbidden - check token permissions for endpoint: " + url
+                    )
+                    return
+                else:
+                    raise AnsibleError(to_native(e.fp.read()))
 
             try:
                 raw_data = to_text(response.read(), errors="surrogate_or_strict")
@@ -1110,8 +1116,14 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             self.vms_list = self.get_resource_list(vm_url)
 
         # Allow looking up devices/vms by their ids
-        self.devices_lookup = {device["id"]: device for device in self.devices_list}
-        self.vms_lookup = {vm["id"]: vm for vm in self.vms_list}
+        if self.devices_list:
+            self.devices_lookup = {device["id"]: device for device in self.devices_list}
+        else:
+            self.devices_list = []
+        if self.vms_list:
+            self.vms_lookup = {vm["id"]: vm for vm in self.vms_list}
+        else:
+            self.vms_list = []
 
         # There's nothing that explicitly says if a host is virtual or not - add in a new field
         for host in self.devices_list:
