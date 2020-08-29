@@ -30,6 +30,11 @@ DOCUMENTATION = """
             required: True
             env:
                 - name: NETBOX_API
+        follow_redirects:
+            description:
+                - Will follow redirects when following pagination results.
+            default: False
+            type: boolean
         validate_certs:
             description:
                 - Allows connection when SSL certificates are not valid. Set to C(false) when certificates are not trusted.
@@ -264,12 +269,12 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                     headers=self.headers,
                     timeout=self.timeout,
                     validate_certs=self.validate_certs,
-                    follow_redirect=True,
+                    follow_redirect=self.follow_redirects,
                 )
             except urllib_error.HTTPError as e:
                 """This will return the response body when we encounter an error.
-                   This is to help determine what might be the issue when encountering an error.
-                   Please check issue #294 for more info.
+                This is to help determine what might be the issue when encountering an error.
+                Please check issue #294 for more info.
                 """
                 raise AnsibleError(to_native(e.fp.read()))
 
@@ -293,8 +298,8 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
     def get_resource_list(self, api_url):
         """Retrieves resource list from netbox API.
-         Returns:
-            A list of all resource from netbox API.
+        Returns:
+           A list of all resource from netbox API.
         """
         if not api_url:
             raise AnsibleError("Please check API URL in script configuration file.")
@@ -381,12 +386,16 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
         if self.services:
             extractors.update(
-                {"services": self.extract_services,}
+                {
+                    "services": self.extract_services,
+                }
             )
 
         if self.interfaces:
             extractors.update(
-                {"interfaces": self.extract_interfaces,}
+                {
+                    "interfaces": self.extract_interfaces,
+                }
             )
 
         return extractors
@@ -1355,6 +1364,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         token = self.get_option("token")
         # Handle extra "/" from api_endpoint configuration and trim if necessary, see PR#49943
         self.api_endpoint = self.get_option("api_endpoint").strip("/")
+        self.follow_redirects = self.get_option("follow_redirects")
         self.timeout = self.get_option("timeout")
         self.max_uri_length = self.get_option("max_uri_length")
         self.validate_certs = self.get_option("validate_certs")
