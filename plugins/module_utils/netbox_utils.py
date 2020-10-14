@@ -462,7 +462,7 @@ class NetboxModule(object):
         # These methods will normalize the regular data
         cleaned_data = self._transform_arg_spec(module.params["data"])
         norm_data = self._normalize_data(cleaned_data)
-        norm_data = self._normalize_data(module.paramsp["data"])
+        norm_data = self._normalize_data(module.params["data"])
         choices_data = self._change_choices_id(self.endpoint, norm_data)
         data = self._find_ids(choices_data, query_params)
         self.data = self._convert_identical_keys(data)
