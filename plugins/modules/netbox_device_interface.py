@@ -48,6 +48,7 @@ options:
           - Name of the device the interface will be associated with (case-sensitive)
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       name:
         description:
           - Name of the interface to be created
@@ -61,6 +62,7 @@ options:
             This has to be specified exactly as what is found within UI
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       type:
         description:
           - |
@@ -69,56 +71,67 @@ options:
             This has to be specified exactly as what is found within UI
         required: false
         type: str
+        default: "UNDEFINED_BY_USER"
       enabled:
         description:
           - Sets whether interface shows enabled or disabled
         required: false
         type: bool
+        default: "UNDEFINED_BY_USER"
       lag:
         description:
           - Parent LAG interface will be a member of
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       mtu:
         description:
           - The MTU of the interface
         required: false
         type: int
+        default: "UNDEFINED_BY_USER"
       mac_address:
         description:
           - The MAC address of the interface
         required: false
         type: str
+        default: "UNDEFINED_BY_USER"
       mgmt_only:
         description:
           - This interface is used only for out-of-band management
         required: false
         type: bool
+        default: "UNDEFINED_BY_USER"
       description:
         description:
           - The description of the prefix
         required: false
         type: str
+        default: "UNDEFINED_BY_USER"
       mode:
         description:
           - The mode of the interface
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       untagged_vlan:
         description:
           - The untagged VLAN to be assigned to interface
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       tagged_vlans:
         description:
           - A list of tagged VLANS to be assigned to interface. Mode must be set to either C(Tagged) or C(Tagged All)
         required: false
         type: raw
+        default: "UNDEFINED_BY_USER"
       tags:
         description:
           - Any tags that the prefix may need to be associated with
         required: false
         type: list
+        default: "UNDEFINED_BY_USER"
     required: true
     type: dict
   update_vc_child:

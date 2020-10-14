@@ -166,6 +166,7 @@ def test_normalize_data_returns_correct_data(mock_netbox_module, before, after):
 def test_remove_arg_spec_defaults(mock_netbox_module, data, expected):
     new_data = mock_netbox_module._transform_arg_spec(data)
 
+    print(new_data)
     assert new_data == expected
 
 

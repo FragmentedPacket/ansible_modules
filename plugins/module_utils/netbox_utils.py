@@ -867,10 +867,10 @@ class NetboxModule(object):
                 elif data_type == "timezone":
                     if " " in v:
                         data[k] = v.replace(" ", "_")
-            if k == "description":
+            if k == "description" and isinstance(v, str):
                 data[k] = v.strip()
 
-            if k == "mac_address":
+            if k == "mac_address" and isinstance(v, str):
                 data[k] = v.upper()
 
         # We need to assign the correct type for the assigned object so the user doesn't have to worry about this.
