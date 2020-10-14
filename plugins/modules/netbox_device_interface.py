@@ -251,7 +251,9 @@ from ansible_collections.netbox.netbox.plugins.module_utils.netbox_dcim import (
     NetboxDcimModule,
     NB_INTERFACES,
 )
-from .netbox_constants import DEFAULT_ARG_VALUE
+from ansible_collections.netbox.netbox.plugins.module_utils.netbox_constants import (
+    DEFAULT_ARG_VALUE,
+)
 from copy import deepcopy
 
 
