@@ -1,6 +1,6 @@
 ---
-- name: "NETBOX_DEVICE TESTS"
-  include_tasks: "netbox_device.yml"
+#- name: "NETBOX_DEVICE TESTS"
+#  include_tasks: "netbox_device.yml"
 
 - name: "NETBOX_DEVICE_INTERFACE TESTS"
   include_tasks: "netbox_device_interface.yml"
