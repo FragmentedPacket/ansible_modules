@@ -3,11 +3,12 @@
         "data": {
             "name": "Test Device",
             "enabled": true,
-            "label": "UNDEFINED_BY_USER",
-            "description": "UNDEFINED_BY_USER",
+            "label": null,
+            "description": null,
             "platform": null,
             "tags": null,
             "tagged_vlans": null,
+            "site": "UNDEFINED_BY_USER",
             "status": 0
         },
         "expected": {

@@ -16,6 +16,9 @@ from itertools import chain
 from .netbox_constants import NETBOX_API_DEFAULT_ARG_MAPPING
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.compat import ipaddress
+from ansible_collections.netbox.netbox.plugins.module_utils.netbox_constants import (
+    DEFAULT_ARG_VALUE,
+)
 
 from ansible.module_utils.common.text.converters import to_text
 
@@ -589,7 +592,7 @@ class NetboxModule(object):
                 # If it cannot find one defined, it will keep it as None.
                 # user wants to remove it, and None is an acceptable default value
                 new_dict[k] = NETBOX_API_DEFAULT_ARG_MAPPING.get(k)
-            elif v != "UNDEFINED_BY_USER":
+            elif v != DEFAULT_ARG_VALUE:
                 new_dict[k] = v
 
         return new_dict
