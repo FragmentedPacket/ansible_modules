@@ -3,14 +3,21 @@
         "data": {
             "name": "Test Device",
             "enabled": true,
-            "site": null,
-            "description": null,
+            "label": "UNDEFINED_BY_USER",
+            "description": "UNDEFINED_BY_USER",
             "platform": null,
+            "tags": null,
+            "tagged_vlans": null,
             "status": 0
         },
         "expected": {
             "name": "Test Device",
             "enabled": true,
+            "label": "",
+            "description": "",
+            "platform": null,
+            "tags": [],
+            "tagged_vlans": [],
             "status": 0
         }
     }

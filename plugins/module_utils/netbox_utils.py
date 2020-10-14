@@ -13,6 +13,7 @@ import traceback
 import re
 import json
 from itertools import chain
+from .netbox_constants import NETBOX_API_DEFAULT_ARG_MAPPING
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.compat import ipaddress
 
@@ -459,8 +460,9 @@ class NetboxModule(object):
         #    self._validate_query_params(self.module.params["query_params"])
 
         # These methods will normalize the regular data
-        cleaned_data = self._remove_arg_spec_default(module.params["data"])
+        cleaned_data = self._transform_arg_spec(module.params["data"])
         norm_data = self._normalize_data(cleaned_data)
+        norm_data = self._normalize_data(module.paramsp["data"])
         choices_data = self._change_choices_id(self.endpoint, norm_data)
         data = self._find_ids(choices_data, query_params)
         self.data = self._convert_identical_keys(data)
@@ -573,16 +575,21 @@ class NetboxModule(object):
 
         return temp_dict
 
-    def _remove_arg_spec_default(self, data):
+    def _transform_arg_spec(self, data):
         """Used to remove any data keys that were not provided by user, but has the arg spec
-        default values
+        default values. This will also set the proper "null" values to send to NetBox API.
         """
         new_dict = dict()
         for k, v in data.items():
             if isinstance(v, dict):
-                v = self._remove_arg_spec_default(v)
+                v = self._transform_arg_spec(v)
                 new_dict[k] = v
-            elif v is not None:
+            elif v is None:
+                # Will attempt to find what is an acceptable default value for the key in the NetBox API.
+                # If it cannot find one defined, it will keep it as None.
+                # user wants to remove it, and None is an acceptable default value
+                new_dict[k] = NETBOX_API_DEFAULT_ARG_MAPPING.get(k)
+            elif v != "UNDEFINED_BY_USER":
                 new_dict[k] = v
 
         return new_dict

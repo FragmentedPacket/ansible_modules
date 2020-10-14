@@ -251,6 +251,7 @@ from ansible_collections.netbox.netbox.plugins.module_utils.netbox_dcim import (
     NetboxDcimModule,
     NB_INTERFACES,
 )
+from .netbox_constants import DEFAULT_ARG_VALUE
 from copy import deepcopy
 
 
@@ -266,22 +267,36 @@ def main():
                 type="dict",
                 required=True,
                 options=dict(
-                    device=dict(required=False, type="raw"),
+                    device=dict(required=False, type="raw", default=DEFAULT_ARG_VALUE),
                     name=dict(required=True, type="str"),
                     form_factor=dict(
-                        required=False, type="raw", removed_in_version="0.3.0"
+                        required=False,
+                        type="raw",
+                        removed_in_version="0.3.0",
+                        default=DEFAULT_ARG_VALUE,
                     ),
-                    type=dict(required=False, type="str"),
-                    enabled=dict(required=False, type="bool"),
-                    lag=dict(required=False, type="raw"),
-                    mtu=dict(required=False, type="int"),
-                    mac_address=dict(required=False, type="str"),
+                    type=dict(required=False, type="str", default=DEFAULT_ARG_VALUE),
+                    enabled=dict(
+                        required=False, type="bool", default=DEFAULT_ARG_VALUE
+                    ),
+                    lag=dict(required=False, type="raw", default=DEFAULT_ARG_VALUE),
+                    mtu=dict(required=False, type="int", default=DEFAULT_ARG_VALUE),
+                    mac_address=dict(
+                        required=False, type="str", default=DEFAULT_ARG_VALUE
+                    ),
                     mgmt_only=dict(required=False, type="bool"),
-                    description=dict(required=False, type="str"),
-                    mode=dict(required=False, type="raw"),
-                    untagged_vlan=dict(required=False, type="raw"),
-                    tagged_vlans=dict(required=False, type="raw"),
-                    tags=dict(required=False, type="list"),
+                    default=DEFAULT_ARG_VALUE,
+                    description=dict(
+                        required=False, type="str", default=DEFAULT_ARG_VALUE
+                    ),
+                    mode=dict(required=False, type="raw", default=DEFAULT_ARG_VALUE),
+                    untagged_vlan=dict(
+                        required=False, type="raw", default=DEFAULT_ARG_VALUE
+                    ),
+                    tagged_vlans=dict(
+                        required=False, type="raw", default=DEFAULT_ARG_VALUE
+                    ),
+                    tags=dict(required=False, type="list", default=DEFAULT_ARG_VALUE),
                 ),
             ),
         )
