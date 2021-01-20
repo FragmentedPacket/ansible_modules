@@ -1,5 +1,8 @@
 ---
 requires_ansible: ">=2.9.10"
+action_groups_redirection:
+  netbox:
+    redirect: netbox
 action_groups:
   netbox:
     - netbox_aggregate
